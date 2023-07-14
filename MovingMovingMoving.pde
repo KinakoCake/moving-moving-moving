@@ -28,8 +28,8 @@ PImage cam2;
 
 void setup() {
 
-  
-  
+
+
   /*String[] cameras = Capture.list();
    cam = new Capture(this, cameras[1]);
    
@@ -72,7 +72,7 @@ void draw() {
 
     fill(e.getColor());
     if (e.num<4) {
-      e.setView(false);
+      //e.setView(false);
     }
   }
 
@@ -89,8 +89,7 @@ void mousePressed() {
   squareRecusion(0, 0, width, count);
   prevElementsSize = num;
 
-  
-  
+  //checkOverlapPosition();
 }
 
 
@@ -99,12 +98,13 @@ void keyPressed() {
     println(e.targetX);
   }
   if (keyCode==38) {
-    for (Element e : es) {
+    checkOverlapPosition();
+    /*for (Element e : es) {
       if (e.getNum()==0) {
         e.x = 0;
         e.y = 0;
       }
-    }
+    }*/
   }
 }
 
@@ -136,7 +136,7 @@ void squareRecusion(float sqX, float sqY, float scale, int cnt) {
     es.set(num, e);
   }
 
-  if(cnt>1){
+  if (cnt>1) {
     //e.setView(false);
   }
 
@@ -150,8 +150,8 @@ void squareRecusion(float sqX, float sqY, float scale, int cnt) {
   cnt-=1;
 
   num += 1;
-  
-  //checkOverlapPosition(e);
+
+
 
   if (cnt>=0) {
     float halfScale = scale/2;
@@ -167,21 +167,64 @@ void squareRecusion(float sqX, float sqY, float scale, int cnt) {
   }
 }
 
-void checkOverlapPosition(Element el) {
-  float x = el.getPosition()[0];
-  float y = el.getPosition()[1];
-  float sz = el.getPosition()[2];
-  
-  println(e.getNum() + "   a");
-  
-  for (Element e : es) {
-    if (e.isView()==true) {
-      if (x>e.x && x<e.x+e.scale) {
-        if (y>e.y && y<e.y+e.scale) {
-          e.setView(false);
-        }
-      }
+void checkOverlapPosition() {
+  for (i=0; i<es.size(); i++) {
+    if (i>es.size()) {
+      println("over");
+    } else {
     }
+    
+    Element searchEl = es.get(100);
+    searchEl.R = 255;
+    es.set(100,searchEl);
+    
+    // 範囲指定で検索するような機能を後で実装する
+    for (Element e : es) {
+      if(searchEl.x > e.x-1 && searchEl.x < e.x + e.scale+1){
+        println("rinsetsu  " + e.getNum());
+        
+      }
+    
+    }
+    
+    //if (x>e.x && x<e.x+e.scale) {
+     //if (y>e.y && y<e.y+e.scale) {
+    
+    
+    /*if (i+1>=es.size()) {
+      println("a");
+    } else {
+      Element ne = es.get(i+1);
+
+      
+      if(ne.scale==e.scale){
+       println("onaji size");
+       
+       ne.R = 255;
+       e.R = 255;
+       
+       es.set(i, e);
+       es.set(i+1, ne);
+       
+       }
+    }*/
+
+    Element e = es.get(i);
+    println(e.getNum());
   }
-  
+  /*float x = el.getPosition()[0];
+   float y = el.getPosition()[1];
+   float sz = el.getPosition()[2];
+   
+   println(e.getNum() + "   a");
+   
+   for (Element e : es) {
+   if (e.isView()==true) {
+   if (x>e.x && x<e.x+e.scale) {
+   if (y>e.y && y<e.y+e.scale) {
+   e.setView(false);
+   }
+   }
+   }
+   }*/
 }

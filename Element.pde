@@ -3,6 +3,13 @@ public class Element {
   private float scale;
   private int Color = int(random(255));
 
+  private int R = 500;
+  private int G = 0;
+  private int B = 0;
+
+
+
+
   private float elX, elY = 0;
   private PImage el;
 
@@ -72,18 +79,26 @@ public class Element {
       noStroke();
 
       //fill(255);
-      myFont = createFont("AppleColorEmoji", 24);
+      //myFont = createFont("AppleColorEmoji", 24);
 
-      textFont(myFont);
+      //textFont(myFont);
 
       String emoji = "\uD83D\uDE00";
       //textSize(scale);
-        text(emoji, x, y+30);
+      //text(emoji, x, y+30);
 
       //image(img, x, y, scale, scale);
 
+      
+
+
       fill(Color);
-      //rect(x, y, scale, scale);
+      if (R!=500) {
+        fill(R, G, B);
+      }
+      rect(x, y, scale, scale);
+      fill(255,0,0);
+      text(num, x, y+10);
     }
   }
 }
