@@ -12,11 +12,11 @@ int prevElementsSize = 0;
 int msTMP = 0;
 
 void setup() {
-  //fullScreen();
-  size(600, 600);
+  fullScreen();
+  //size(600, 600);
 
   es = new ArrayList<Element>();
-  squareRecursion(0, 0, width, count);
+  squareRecursion(0, 0, height, count);
   prevElementsSize = es.size();
 }
 
@@ -79,6 +79,7 @@ void squareRecursion(float sqX, float sqY, float scale, int cnt) {
 
 void regenSquareRecursion() {
   num = 0;
-  squareRecursion(0, 0, width, count);
+  squareRecursion(0, 0, height, count);
+  squareRecursion(height, 0, height, 3);
   prevElementsSize = num;
 }
