@@ -9,10 +9,11 @@ ArrayList<Element> es;
 int count = 4;
 int num = 0;
 int prevElementsSize = 0;
+int msTMP = 0;
 
 void setup() {
   //fullScreen();
-  size(600,600);
+  size(600, 600);
 
   es = new ArrayList<Element>();
   squareRecursion(0, 0, width, count);
@@ -26,12 +27,18 @@ void draw() {
     e.move();
     e.render();
   }
+
+  int ms = millis();
+
+
+  if (ms - msTMP >= 1800) {
+    regenSquareRecursion();
+    msTMP = ms;
+  }
 }
 
 void mousePressed() {
-  num = 0;
-  squareRecursion(0, 0, width, count);
-  prevElementsSize = num;
+  regenSquareRecursion();
 }
 
 void squareRecursion(float sqX, float sqY, float scale, int cnt) {
@@ -68,4 +75,10 @@ void squareRecursion(float sqX, float sqY, float scale, int cnt) {
       squareRecursion(sqX, sqY+halfScale, halfScale, cnt);
     }
   }
+}
+
+void regenSquareRecursion() {
+  num = 0;
+  squareRecursion(0, 0, width, count);
+  prevElementsSize = num;
 }
