@@ -11,15 +11,16 @@ int num = 0;
 int prevElementsSize = 0;
 
 void setup() {
-  size(600, 600);
+  //fullScreen();
+  size(600,600);
 
   es = new ArrayList<Element>();
-  squareRecusion(0, 0, width, count);
+  squareRecursion(0, 0, width, count);
   prevElementsSize = es.size();
 }
 
 void draw() {
-  background(255);
+  background(0);
 
   for (Element e : es) {
     e.move();
@@ -29,11 +30,11 @@ void draw() {
 
 void mousePressed() {
   num = 0;
-  squareRecusion(0, 0, width, count);
+  squareRecursion(0, 0, width, count);
   prevElementsSize = num;
 }
 
-void squareRecusion(float sqX, float sqY, float scale, int cnt) {
+void squareRecursion(float sqX, float sqY, float scale, int cnt) {
 
   if (prevElementsSize>=1 && num < prevElementsSize) {
     e = es.get(num);
@@ -61,10 +62,10 @@ void squareRecusion(float sqX, float sqY, float scale, int cnt) {
 
     float p = map(cnt, 0, cnt-1, 0.5, 0);
     if (random(1)>p) {
-      squareRecusion(sqX, sqY, halfScale, cnt);
-      squareRecusion(sqX+halfScale, sqY, halfScale, cnt);
-      squareRecusion(sqX+halfScale, sqY+halfScale, halfScale, cnt);
-      squareRecusion(sqX, sqY+halfScale, halfScale, cnt);
+      squareRecursion(sqX, sqY, halfScale, cnt);
+      squareRecursion(sqX+halfScale, sqY, halfScale, cnt);
+      squareRecursion(sqX+halfScale, sqY+halfScale, halfScale, cnt);
+      squareRecursion(sqX, sqY+halfScale, halfScale, cnt);
     }
   }
 }
