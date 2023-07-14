@@ -70,12 +70,16 @@ public class Element {
 
   void render() {
     if (view==true) {
-
       noStroke();
       fill(Color);
 
       rect(x, y, scale, scale);
-      fill(255,0,0);
+      
+      if(Color<160){
+        fill(255);
+      }else{
+        fill(0);
+      }
       text(num, x, y+10);
     }
   }
