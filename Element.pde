@@ -7,9 +7,6 @@ public class Element {
   private int G = 0;
   private int B = 0;
 
-
-
-
   private float elX, elY = 0;
   private PImage el;
 
@@ -17,7 +14,6 @@ public class Element {
   private float targetScale;
   private int num;
   private Boolean view = true;
-
 
   float[] getPosition() {
     float [] positions = {this.x, this.y, this.scale};
@@ -37,7 +33,6 @@ public class Element {
   int getColor() {
     return this.Color;
   }
-
 
   void setTargetPos(float x, float y, float sz) {
     targetX = x;
@@ -77,25 +72,8 @@ public class Element {
     if (view==true) {
 
       noStroke();
-
-      //fill(255);
-      //myFont = createFont("AppleColorEmoji", 24);
-
-      //textFont(myFont);
-
-      String emoji = "\uD83D\uDE00";
-      //textSize(scale);
-      //text(emoji, x, y+30);
-
-      //image(img, x, y, scale, scale);
-
-      
-
-
       fill(Color);
-      if (R!=500) {
-        fill(R, G, B);
-      }
+
       rect(x, y, scale, scale);
       fill(255,0,0);
       text(num, x, y+10);
