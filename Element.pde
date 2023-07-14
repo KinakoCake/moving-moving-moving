@@ -8,6 +8,9 @@ public class Element {
 
   private float targetX, targetY;
   private float targetScale;
+  private int num;
+  private Boolean view = true;
+
 
   float[] getPosition() {
     float [] positions = {this.x, this.y, this.scale};
@@ -35,6 +38,14 @@ public class Element {
     targetScale = sz;
   }
 
+  void setNum(int n) {
+    num = n;
+  }
+
+  int getNum() {
+    return this.num;
+  }
+
   void move() {
     float easing = 0.1;
 
@@ -47,9 +58,32 @@ public class Element {
     this.scale += dsz * easing;
   }
 
-  /*void render() {
-   fill(col);
-   ellipseMode(CORNER);
-   rect(x, y, scale, scale);
-   }*/
+  void setView(Boolean b) {
+    view = b;
+  }
+
+  Boolean isView() {
+    return view;
+  }
+
+  void render() {
+    if (view==true) {
+
+      noStroke();
+
+      //fill(255);
+      myFont = createFont("AppleColorEmoji", 24);
+
+      textFont(myFont);
+
+      String emoji = "\uD83D\uDE00";
+      //textSize(scale);
+        text(emoji, x, y+30);
+
+      //image(img, x, y, scale, scale);
+
+      fill(Color);
+      //rect(x, y, scale, scale);
+    }
+  }
 }
