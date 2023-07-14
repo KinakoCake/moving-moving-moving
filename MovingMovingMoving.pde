@@ -1,17 +1,23 @@
 import java.util.Collections;
 PFont myFont;
 String emoji = "";
+Boolean debug = false;
 
 int i = 0;
 int count = 4;
 int num = 0;
 int prevElementsSize = 0;
 Boolean isMoving = false;
+int[] removeElements = new int[3];
 
 PImage img;
 
 Element e;
 ArrayList<Element> es;
+ArrayList<Integer> topElements = new ArrayList<>();
+
+
+int n = 0;
 
 
 //int sz=10;
@@ -37,14 +43,15 @@ void setup() {
    cam.start();*/
 
 
-  size(600, 600);
+  size(800, 600);
+  fullScreen();
 
 
   //initElement();
 
   println("再起処理前");
   es = new ArrayList<Element>();
-  squareRecusion(0, 0, width, count);
+  squareRecusion(width/2-(height/2), 0, height, count);
   println("再起処理終了");
   prevElementsSize = es.size();
 }
@@ -53,7 +60,7 @@ void draw() {
   /*if (cam.available()) {
    cam.read();
    }*/
-  background(255);
+  background(0);
 
 
 
@@ -76,35 +83,78 @@ void draw() {
     }
   }
 
-  ArrayList<Element> res = new ArrayList<Element>(es);
-  Collections.reverse(res);
-
   for (Element e : es) {
     e.render();
   }
 }
 
 void mousePressed() {
+  /*for(Element e:es){
+    for(Integer i:topElements){
+      if(e.getNum() == i){
+        println(i + "   " + e.getNum());
+      }else{
+        e.setView(false);
+      }
+    }
+    
+    println(e.getNum());
+  }*/
   num = 0;
-  squareRecusion(0, 0, width, count);
+  squareRecusion(width/2-(height/2), 0, height, count);
   prevElementsSize = num;
 
-  //checkOverlapPosition();
+  //uniteElement();
+
+
 }
 
-
 void keyPressed() {
-  for (Element e : es) {
-    println(e.targetX);
+  println(keyCode);
+  if (keyCode == 49) {
+    debug = !debug;
+    println(debug);
+  }
+  if (keyCode == 81 && n<=es.size()) {
+    println(n);
+    n++;
+  } else if (keyCode == 87 && n!=0) {
+    println(n);
+    n--;
+  }
+
+  if (debug==true) {
+    for (Element e : es) {
+      if (e.getNum()==n) {
+        e.setView(true);
+      } else {
+        e.setView(false);
+      }
+    }
+  } else {
+    for (Element e : es) {
+      e.setView(true);
+    }
   }
   if (keyCode==38) {
-    checkOverlapPosition();
-    /*for (Element e : es) {
-      if (e.getNum()==0) {
-        e.x = 0;
-        e.y = 0;
-      }
-    }*/
+    uniteElement();
+  } else if (keyCode==37) {
+    for (i=0; i<=2; i++) {
+      //es.remove(removeElements[i]);
+      //println("dellllll");
+
+
+      
+      e = es.get(100);
+
+      e.targetScale = e.scale*2;
+
+      es.set(100, e);
+    }
+    //removeElements = new int[3];
+  } else if (keyCode==39) {
+    e = es.get(0);
+    checkOverlapPosition(e);
   }
 }
 
@@ -124,7 +174,7 @@ void squareRecusion(float sqX, float sqY, float scale, int cnt) {
     //println("b");
     e = new Element();
     e.setTargetPos(sqX, sqY, scale);
-    e.setNum(es.size()-1);
+    e.setNum(es.size());
     es.add(e);
     es.set(es.size()-1, e);
     //println("add");
@@ -151,7 +201,7 @@ void squareRecusion(float sqX, float sqY, float scale, int cnt) {
 
   num += 1;
 
-
+  println(cnt + "  " + e.getNum());
 
   if (cnt>=0) {
     float halfScale = scale/2;
@@ -167,50 +217,83 @@ void squareRecusion(float sqX, float sqY, float scale, int cnt) {
   }
 }
 
-void checkOverlapPosition() {
+void uniteElement() {
   for (i=0; i<es.size(); i++) {
     if (i>es.size()) {
       println("over");
     } else {
     }
-    
-    Element searchEl = es.get(100);
-    searchEl.R = 255;
-    es.set(100,searchEl);
-    
-    // 範囲指定で検索するような機能を後で実装する
-    for (Element e : es) {
-      if(searchEl.x > e.x-1 && searchEl.x < e.x + e.scale+1){
-        println("rinsetsu  " + e.getNum());
-        
-      }
-    
-    }
-    
-    //if (x>e.x && x<e.x+e.scale) {
-     //if (y>e.y && y<e.y+e.scale) {
-    
-    
-    /*if (i+1>=es.size()) {
-      println("a");
-    } else {
-      Element ne = es.get(i+1);
 
-      
-      if(ne.scale==e.scale){
-       println("onaji size");
-       
-       ne.R = 255;
-       e.R = 255;
-       
-       es.set(i, e);
-       es.set(i+1, ne);
-       
-       }
-    }*/
+
+    Element searchEl = es.get(i);
+    searchEl.R = 255;
+    es.set(i, searchEl);
+
+    // 範囲指定で検索するような機能を後で実装する
+
+    int n = 0;
+    for (Element e : es) {
+      float d = dist(e.x, e.y, searchEl.x, searchEl.y) ;
+      if (d < 108 ) {
+
+        if (e.scale < searchEl.scale+1 && e.scale > searchEl.scale-1) {
+          //println("rinsetsu  " + e.getNum() + "   " + d + "   " + e.scale + "  " + n);
+          e.R = 100;
+          n++;
+
+
+          if (searchEl.y<e.y && (searchEl.x < e.x+1 && searchEl.x > e.x-1) ) {
+            println(searchEl.x + " > " + (e.x + 1));
+            println(searchEl.x + " < " + (e.x - 1));
+            println(e.getNum() + " is shita");
+            removeElements[0] = e.getNum();
+          }
+
+          if (searchEl.x<e.x && (searchEl.y < e.y+1 && searchEl.y > e.y-1) ) {
+            println(searchEl.x + " > " + (e.x + 1));
+            println(searchEl.x + " < " + (e.x - 1));
+            println(e.getNum() + " is hidari");
+            removeElements[1] = e.getNum();
+          }
+
+          if ((searchEl.x<e.x && searchEl.y<e.y)) {
+            println(searchEl.x + " > " + (e.x + 1));
+            println(searchEl.x + " < " + (e.x - 1));
+            println(e.getNum() + " is naname shita hidari");
+            removeElements[2] = e.getNum();
+          }
+        }
+      }
+
+
+      if (searchEl.x > e.x-1 && searchEl.x < e.x + e.scale+1) {
+      }
+    }
+
+    //if (x>e.x && x<e.x+e.scale) {
+    //if (y>e.y && y<e.y+e.scale) {
+
+
+    /*if (i+1>=es.size()) {
+     println("a");
+     } else {
+     Element ne = es.get(i+1);
+     
+     
+     if(ne.scale==e.scale){
+     println("onaji size");
+     
+     ne.R = 255;
+     e.R = 255;
+     
+     es.set(i, e);
+     es.set(i+1, ne);
+     
+     }
+     }*/
 
     Element e = es.get(i);
-    println(e.getNum());
+    //println(e.getNum());
   }
   /*float x = el.getPosition()[0];
    float y = el.getPosition()[1];
@@ -227,4 +310,13 @@ void checkOverlapPosition() {
    }
    }
    }*/
+}
+
+void checkOverlapPosition(Element el) {
+
+  for (Element e : es) {
+    if (e.x == el.x && e.y == el.y) {
+      println("[おい！！！！]" + e.getNum() + ": " + e.x + "    " + el.getNum() + ": " + el.x);
+    }
+  }
 }

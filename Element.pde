@@ -79,17 +79,17 @@ public class Element {
       noStroke();
 
       //fill(255);
-      //myFont = createFont("AppleColorEmoji", 24);
+      /*myFont = createFont("AppleColorEmoji", 24);
 
-      //textFont(myFont);
+      textFont(myFont);
 
       String emoji = "\uD83D\uDE00";
-      //textSize(scale);
-      //text(emoji, x, y+30);
+      textSize(scale);
+      text(emoji, x, y+(scale/2.62));*/
 
       //image(img, x, y, scale, scale);
 
-      
+
 
 
       fill(Color);
@@ -97,7 +97,11 @@ public class Element {
         fill(R, G, B);
       }
       rect(x, y, scale, scale);
-      fill(255,0,0);
+      if (Color>200) {
+        fill(0);
+      } else {
+        fill(255);
+      }
       text(num, x, y+10);
     }
   }
