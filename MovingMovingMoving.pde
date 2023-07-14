@@ -7,6 +7,7 @@ Element e;
 ArrayList<Element> es;
 
 int count = 4;
+int countR = 3;
 int num = 0;
 int prevElementsSize = 0;
 int msTMP = 0;
@@ -16,7 +17,7 @@ void setup() {
   //size(600, 600);
 
   es = new ArrayList<Element>();
-  squareRecursion(0, 0, height, count);
+  genSquareRecursion();
   prevElementsSize = es.size();
 }
 
@@ -29,16 +30,14 @@ void draw() {
   }
 
   int ms = millis();
-
-
   if (ms - msTMP >= 1800) {
-    regenSquareRecursion();
+    genSquareRecursion();
     msTMP = ms;
   }
 }
 
 void mousePressed() {
-  regenSquareRecursion();
+  genSquareRecursion();
 }
 
 void squareRecursion(float sqX, float sqY, float scale, int cnt) {
@@ -61,7 +60,7 @@ void squareRecursion(float sqX, float sqY, float scale, int cnt) {
     es.set(num, e);
   }
 
-  cnt-=1;
+  cnt -= 1;
   num += 1;
 
   if (cnt>=0) {
@@ -77,9 +76,11 @@ void squareRecursion(float sqX, float sqY, float scale, int cnt) {
   }
 }
 
-void regenSquareRecursion() {
+void genSquareRecursion() {
   num = 0;
+
   squareRecursion(0, 0, height, count);
-  squareRecursion(height, 0, height, 3);
+  squareRecursion(height-(height/4), 0, height, countR);
+
   prevElementsSize = num;
 }

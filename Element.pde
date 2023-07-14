@@ -49,7 +49,7 @@ public class Element {
   }
 
   void move() {
-    float easing = 0.1;
+    float easing = 0.09;
 
     float dx = targetX - x;
     float dy = targetY - y;
