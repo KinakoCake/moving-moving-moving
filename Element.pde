@@ -1,14 +1,7 @@
 public class Element {
   private float x, y;
   private float scale;
-  private int Color = int(random(255));
-
-  private int R = 500;
-  private int G = 0;
-  private int B = 0;
-
-  private float elX, elY = 0;
-  private PImage el;
+  int Color;
 
   private float targetX, targetY;
   private float targetScale;
@@ -20,18 +13,16 @@ public class Element {
     return positions;
   }
 
-  void setElement() {
-    //elX = (int)random(width);
-    //elY = (int)random(height);
-  }
-
-  /*PImage getElement() {
-   //el = cam.get(elX, elY, sz, sz);
-   return this.el;
-   }*/
-
   int getColor() {
     return this.Color;
+  }
+
+  void setRandomColor() {
+    if (0.6 > random(10)) {
+      Color = 255;
+    } else {
+      Color = int(random(25, 255));
+    }
   }
 
   void setTargetPos(float x, float y, float sz) {
@@ -49,7 +40,7 @@ public class Element {
   }
 
   void move() {
-    float easing = 0.09;
+    float easing = 0.075;
 
     float dx = targetX - x;
     float dy = targetY - y;
@@ -70,16 +61,17 @@ public class Element {
 
   void render() {
     if (view==true) {
-      noStroke();
       fill(Color);
-
       rect(x, y, scale, scale);
-      
-      if(Color<160){
+
+      noStroke();
+
+      if (Color<160) {
         fill(255);
-      }else{
+      } else {
         fill(0);
       }
+
       text(num, x, y+10);
     }
   }

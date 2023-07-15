@@ -1,8 +1,3 @@
-import processing.video.*;
-Capture cam;
-PImage img;
-PImage cam2;
-
 Element e;
 ArrayList<Element> es;
 
@@ -30,7 +25,7 @@ void draw() {
   }
 
   int ms = millis();
-  if (ms - msTMP >= 1800) {
+  if (ms - msTMP >= 2500) {
     genSquareRecursion();
     msTMP = ms;
   }
@@ -51,6 +46,7 @@ void squareRecursion(float sqX, float sqY, float scale, int cnt) {
     e = new Element();
     e.setTargetPos(sqX, sqY, scale);
     e.setNum(es.size()-1);
+    e.setRandomColor();
     es.add(e);
     es.set(es.size()-1, e);
   } else if (num > prevElementsSize && num <= es.size()) {
